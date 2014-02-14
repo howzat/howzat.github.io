@@ -73,7 +73,7 @@ because 'Any' is at the root of `Scala's type hierarchy
 <http://docs.scala-lang.org/tutorials/tour/unified-types.html>`_ , all other
 types are now valid sub-classes. Don't do this.
 
-3. Use a "Type Parameter" (a.k.a parametric polymorphism)
+3. Use a "Type Parameter" (a.k.a parametric polymorphism).
 Type parameters are placeholders for specific types that will be supplied
 later. Type parameters give us configurable type safety, which sounds good.
 ::
