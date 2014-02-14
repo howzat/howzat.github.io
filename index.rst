@@ -111,8 +111,8 @@ see why and how, starting with 'upper type' bounds:
      println("Pass me the knife")
    }
 
-The bound is denoted by the symbol ``<:`` which can be read as 'T is a sub-class
-of Dr'. So our definition states that valid values of ``T`` are constrained to
+The bound is denoted by the symbol ``<:`` which can be read as 'sub-class
+of'. So our definition states that valid values of ``T`` are constrained to
 concrete types descended from Person and Qualification. ``Dr`` is therefore the
 'upper bound', the most general concrete type our function will accept.
 
