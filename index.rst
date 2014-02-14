@@ -146,7 +146,7 @@ it to choose the most general concrete types our code can operate upon.
 As upper bounds are useful for selecting narrower types, lower bounds are
 useful for selecting wider types. The lower bound is denoted by the ``>:``
 symbol.  Lets look at an example ripped from Joshua Suereth's book `Scala in
-Depth <http://Scala in Depth>`_
+Depth <http://www.manning.com/suereth/>`_
 ::
     class Container {
       type Things >: List[Int]
