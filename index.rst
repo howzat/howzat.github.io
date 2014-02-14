@@ -238,7 +238,7 @@ where a runtime ArrayStoreException is raised. Scala takes a different
 approach which has the advantage of being enforceable at compile time. Scala
 restricts the positions a co-variant parameter can appear.
 
-Taken from 'Scala By Example':
+Taken from `Scala By Example <http://www.scala-lang.org/docu/files/ScalaByExample.pdf>`_:
 ::
    "A co-variant type parameter of a class may only appear in co-variant positions
    inside the class. Among the co-variant positions are the types of values in the
