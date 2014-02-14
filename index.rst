@@ -156,7 +156,7 @@ Depth <http://www.manning.com/suereth/>`_
 Container has been defined with an inner type ``Things``, ``Things`` has been
 constrained using a lower bound to values which are equal or
 super-types of ``List[Int]``. That means we can legally create instances of
-Container where ``Things`` has a mxore general type than ``List[Int]``.
+Container where ``Things`` has a more general type than ``List[Int]``.
 ::
    scala> val first = new Container { type Things = Traversable[Int] }
    first: Container{type Things = Traversable[Int]} = $anon$1@53edd9ee
