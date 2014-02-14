@@ -74,11 +74,11 @@ because 'Any' is at the root of `Scala's type hierarchy
 types are now valid sub-classes. Don't do this.
 
 3. Use a "Type Parameter" (a.k.a parametric polymorphism)
-  Type parameters are placeholders for specific types that will be supplied
-  later. Type parameters give us configurable type safety, which sounds good.
+Type parameters are placeholders for specific types that will be supplied
+later. Type parameters give us configurable type safety, which sounds good.
 ::
-  scala>  def get[T](param:T) = param
-  get: [T](param: T)T
+   scala>  def get[T](param:T) = param
+   get: [T](param: T)T
 
 ``[T]`` is the Type Parameter - it contains a single Type Variable: ``T``. ``T``
 is the variable into which a specific type will be substituted. There's nothing
