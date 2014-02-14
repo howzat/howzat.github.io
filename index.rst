@@ -257,8 +257,8 @@ the error message given above. Contra-variance means that to be a conformant
 type the type has to be in a super-type relationship with ``T``.
 
 As a rule our functions should be co-variant in parameter type and
-contra-variant in return type. Think about it- providing a narrower input type
-is always safe, e.g. a List in place of a Traversable. Likewise returning a
+contra-variant in return type. Think about it - providing a narrower input type
+is always safe, e.g. a ``List`` in place of a ``Traversable``. Likewise returning a
 super-type of the return value is always safe, e.g. ``Any`` in place of
 ``String``.
 
