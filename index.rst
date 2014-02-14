@@ -7,7 +7,7 @@ on Scala's Type System. I've tried to organise the contents sensibly, so it's
 graduated with respect to complexity. In order then, the notes cover Type
 Parameterisation, Type Bounds and then Type Variance.
 
-According to `[Benjamin Pierce]
+According to `Benjamin Pierce
 <http://mitpress.mit.edu/books/types-and-programming-languages>`_ : "A type
 system is a syntactic method for automatically checking the absence of certain
 erroneous behaviors by classifying program phrases according to the kinds of
