@@ -64,8 +64,7 @@ scala> def get(param:Boolean) = param // and the others...
 ```
 
 As a generally applicable solution this doesn't cut it. Repetition is both
-tedious and contrary to one of the basic principals of software design: [DRY]
-(http://en.wikipedia.org/wiki/Don't_repeat_yourself)
+tedious and contrary to one of the basic principals of software design: [DRY](http://en.wikipedia.org/wiki/Don't_repeat_yourself)
 
 2. Widen the type signature to ``Any``:
 
@@ -77,8 +76,7 @@ scala> get("Foo") res2: Any = Foo // return type is also Any
 
 In Scala this is analogous to walking up the down escalator; we just rolled
 type safety out the passenger door. This is a bad thing.  Our example compiles
-because 'Any' is at the root of [Scala's type hierarchy](
-(http://docs.scala-lang.org/tutorials/tour/unified-types.html) , all other
+because 'Any' is at the root of [Scala's type hierarchy](http://docs.scala-lang.org/tutorials/tour/unified-types.html) , all other
 types are now valid sub-classes. Don't do this.
 
 3. Use a "Type Parameter" (a.k.a parametric polymorphism)
