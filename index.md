@@ -286,7 +286,7 @@ scala> val jeepers = allTheThings.update(false) // This can NOT be allowed!
 Co-Variance has allowed us to widen the type to ``Any``, at which point we can
 potentially make unsafe assignments. The exact same situation arises with Java
 Arrays, where a runtime ``ArrayStoreException`` is raised. Scala takes a different
-approach which has the advantage of being enforceable at compile time. ook what actually happens.
+approach which has the advantage of being enforceable at compile time. Look what actually happens.
 
 ```scala
 scala>  class Box[+T] { def update( f:T) {}  }
