@@ -49,7 +49,7 @@ moment ``get`` s input and output types are fixed as ``String``
 Type Parameterisation
 =================================
 
-Lets imagine it's our job to extend the ``get`` function to work with other
+Let's imagine it's our job to extend the ``get`` function to work with other
 types. The options are:
 
 1. Overload the get function for each type:
@@ -68,7 +68,7 @@ tedious and contrary to one of the basic principals of software design: `DRY
   scala> get(9) res1:Any = 9 // return type is Any
   scala> get("Foo") res2: Any = Foo // return type is also Any
 
-In Scala this is analogous to walking up the down escalator; we've just rolled
+In Scala this is analogous to walking up the down escalator; we just rolled
 type safety out the passenger door. This is a bad thing.  Our example compiles
 because 'Any' is at the root of `Scala's type hierarchy
 <http://docs.scala-lang.org/tutorials/tour/unified-types.html>`_ , all other
@@ -92,7 +92,7 @@ special about ``T`` it could have been any other valid variable name. Behold:
 Whenever the function is invoked the actual type of ``T`` becomes apparent.  At
 which point you can mentally replace all the ``Ts`` in the definition with the
 type of the parameter being passed. We now have a generic function that can be
-safely applied to different kinds of data. Lets move on to see what kind of
+safely applied to different kinds of data. Let's move on to see what kind of
 restrictions we can apply to ``T``, and why they might be useful.
 
 =================================
@@ -101,7 +101,7 @@ Type Bounds
 
 Scala is an object oriented language; some constructs are naturally expressed
 using inheritance relationships. That has implications for our ``T``, we need a
-way to constrain ``T`` to concrete types within an inheritance hierarchy. Lets
+way to constrain ``T`` to concrete types within an inheritance hierarchy. Let's
 see why and how, starting with 'upper type' bounds:
 ::
    trait Person
@@ -126,7 +126,7 @@ instance needs a little refinement...
    scala> operate(new Person with CyclingProficiency)
    Pass me the knife // uh-oh this looks bad :(
 
-The compiler can help us out, lets refine the restriction.
+The compiler can help us out, let's refine the restriction.
 ::
    scala> trait MedicalDegree extends Qualification
    scala> type Doctor = Person with MedicalDegree // restrict the hierarchy
@@ -150,7 +150,7 @@ operate upon.
 
 As upper bounds constrain to narrower types, so lower bounds constrain to wider
 ones. The lower bound is denoted by the ``>:`` symbol, which we can read as
-'super-class of'.  Lets look at an example ripped from Joshua Suereth's book
+'super-class of'.  Let's look at an example ripped from Joshua Suereth's book
 `Scala in Depth <http://www.manning.com/suereth/>`_
 ::
    class Container {
@@ -199,7 +199,7 @@ sub-classing. Were going to see what problems arise and how they are solved
 using something called Type Variance.
 
 Variance declares how type parameters can be changed to create new but
-conformant types. For the purposes of exposition, lets create our own Generic
+conformant types. For the purposes of exposition, let's create our own Generic
 Type.
 ::
    class Box[T]() {}
@@ -232,7 +232,7 @@ conformant. To make a class co-variant we add a plus sign (+) to the type
 parameter. Co-variance tells the compiler that it's safe for this class to
 appear in contexts where we are casting the variable to a super-type.
 
-Lets update our Box and prove to ourselves it works
+Let's update our Box and prove to ourselves it works
 ::
    scala> class Box[+T] {}
 
@@ -270,7 +270,7 @@ parameters as *contra-variant* positions, and Scala wont let us put a
 *co-variant* parameter in a *contra-variant* position. This rule stops
 us shooting ourselves in the face and storing a Boolean in a list of Strings.
 
-Ok. Detour complete, lets return to why lower bounds are useful. The error
+Ok. Detour complete, let's return to why lower bounds are useful. The error
 message tells us that method parameters are contra-variant. We have
 to make sure that ``f`` is in a super-type relationship with ``T``.
 
