@@ -55,7 +55,7 @@ Type Parameterisation
 Let's imagine it's our job to extend the ``get`` function to work with other
 types. The options are:
 
-1. Overload the get function for each type:
+* Overload the get function for each type:
 
 ```scala
 scala> def get(param:String) = param
@@ -66,7 +66,7 @@ scala> def get(param:Boolean) = param // and the others...
 As a generally applicable solution this doesn't cut it. Repetition is both
 tedious and contrary to one of the basic principals of software design: [DRY](http://en.wikipedia.org/wiki/Don't_repeat_yourself)
 
-2. Widen the type signature to ``Any``:
+* Widen the type signature to ``Any``:
 
 ```scala
 scala> def get(param:Any) = param
@@ -79,7 +79,7 @@ type safety out the passenger door. This is a bad thing.  Our example compiles
 because 'Any' is at the root of [Scala's type hierarchy](http://docs.scala-lang.org/tutorials/tour/unified-types.html) , all other
 types are now valid sub-classes. Don't do this.
 
-3. Use a "Type Parameter" (a.k.a parametric polymorphism)
+* Use a "Type Parameter" (a.k.a parametric polymorphism)
   Type parameters are placeholders for specific types that will be supplied
   later. Type parameters give us configurable type safety, which sounds good.
 
