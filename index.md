@@ -10,7 +10,7 @@ According to [Benjamin Pierce:](
 http://mitpress.mit.edu/books/types-and-programming-languages) 
 
 > "A typesystem is a syntactic method for automatically checking the 
-absence of certainerroneous behaviors by classifying program phrases 
+absence of certain erroneous behaviors by classifying program phrases 
 according to the kinds of values they compute".
 
 So, a type system gives us a means to express rules about the kinds of
