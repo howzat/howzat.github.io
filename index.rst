@@ -23,12 +23,13 @@ Type Inference
 =================================
 
 Here's an example of Scala's type system doing, er - something:
-::
+  ```scala
   scala> val showMe : String = "This is  a string"
   showMe: String = This is  a string
 
   scala> val inferMe = "So is this"
   inferMe: String = So is this
+  ```
 
 Everything in Scala has a type. We can either state it explicitly as in
 ``showMe`` or defer to Scala's type inferencer. Here ``inferMe`` has been
