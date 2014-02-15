@@ -324,7 +324,7 @@ safe, e.g. ``Traversable`` in place of a ``List``.
 
 That's it; we've seen how to parameratise classes and functions and how to
 restrict type variables with bounds. We've learned how to make Generic classes
-that make proper use of co-variance & contra-variance.
+that make proper use of co-variance & contra-variance. Well done for making it this far.
 
 A few points have been edited out because they distracted from the narrative I
 wanted to provide. I'll round those up in a subsequent post in due course.
