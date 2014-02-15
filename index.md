@@ -260,7 +260,7 @@ appear in contexts where we are casting the variable to a super-type.
 Let's update our Box and prove to ourselves it works
 
 ```scala
-scala> class Box[+T] {}
+scala> class Box[+T] {} // notice the plus (+)
 
 scala> val box = new Box[String]
 box: Box[String] = Box@4ce2fbd3
