@@ -163,7 +163,7 @@ good job! So, to recap - the upper bound is useful for narrowing type
 selection. We use it to define the most general concrete type our code can
 operate upon.
 
-As upper bounds constrain to narrower types, so lower bounds constrain to wider
+As upper bounds constrain us to narrower types, so lower bounds constrain us to wider
 ones. The lower bound is denoted by the ``>:`` symbol, which we can read as
 'super-class of'.  Let's look at an example ripped from [Joshua Suereth's book
 - Scala in Depth](http://www.manning.com/suereth)
