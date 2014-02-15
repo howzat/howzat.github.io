@@ -320,7 +320,7 @@ If you think about it, it makes sense. Functions should be co-variant in
 parameter type and contra-variant in return type. Providing a narrower input
 type is always safe, e.g. passing ``List`` in place of a
 ``Traversable``. Likewise returning a super-type of the return value is always
-safe, e.g. ``Iterable`` in place of a ``String``.
+safe, e.g. ``Traversable`` in place of a ``List``.
 
 That's it; we've seen how to parameratise classes and functions and how to
 restrict type variables with bounds. We've learned how to make Generic classes
