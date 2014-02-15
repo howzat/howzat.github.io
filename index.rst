@@ -7,7 +7,7 @@ on Scala's Type System. I've tried to organise the contents sensibly, so it's
 graduated with respect to complexity. In order then, the notes cover Type
 Parameterisation, Type Bounds and then Type Variance.
 
-According to `Benjamin Pierce
+According to `[Benjamin Pierce]
 <http://mitpress.mit.edu/books/types-and-programming-languages>`_ : "A type
 system is a syntactic method for automatically checking the absence of certain
 erroneous behaviors by classifying program phrases according to the kinds of
@@ -26,6 +26,7 @@ Here's an example of Scala's type system doing, er - something:
 ::
   scala> val showMe : String = "This is  a string"
   showMe: String = This is  a string
+
   scala> val inferMe = "So is this"
   inferMe: String = So is this
 
@@ -48,8 +49,8 @@ moment ``get`` s input and output types are fixed as ``String``
 Type Parameterisation
 =================================
 
-Lets imagine it's our job to extend the ``get`` function to work with
-other types. The options are:
+Lets imagine it's our job to extend the ``get`` function to work with other
+types. The options are:
 
 1. Overload the get function for each type:
 ::
@@ -58,7 +59,7 @@ other types. The options are:
   scala> def get(param:Boolean) = param // and the others...
 
 As a generally applicable solution this doesn't cut it. Repetition is both
-tedious and contrary to one of the basic principals of software  design: `DRY
+tedious and contrary to one of the basic principals of software design: `DRY
 <http://en.wikipedia.org/wiki/Don't_repeat_yourself>`_
 
 2. Widen the type signature to 'Any':
@@ -73,12 +74,12 @@ because 'Any' is at the root of `Scala's type hierarchy
 <http://docs.scala-lang.org/tutorials/tour/unified-types.html>`_ , all other
 types are now valid sub-classes. Don't do this.
 
-3. Use a "Type Parameter" (a.k.a parametric polymorphism).
-Type parameters are placeholders for specific types that will be supplied
-later. Type parameters give us configurable type safety, which sounds good.
+3. Use a "Type Parameter" (a.k.a parametric polymorphism)
+  Type parameters are placeholders for specific types that will be supplied
+  later. Type parameters give us configurable type safety, which sounds good.
 ::
-   scala>  def get[T](param:T) = param
-   get: [T](param: T)T
+  scala>  def get[T](param:T) = param
+  get: [T](param: T)T
 
 ``[T]`` is the Type Parameter - it contains a single Type Variable: ``T``. ``T``
 is the variable into which a specific type will be substituted. There's nothing
@@ -105,34 +106,36 @@ see why and how, starting with 'upper type' bounds:
 ::
    trait Person
    trait Qualification
-   type Dr = Person with Qualification
+   type Doctor = Person with Qualification
 
-    def operate[T <: Dr](p:T){
+    def operate[T <: Doctor](p:T){
      println("Pass me the knife")
    }
 
-The bound is denoted by the symbol ``<:`` which can be read as 'sub-class
-of'. So our definition states that valid values of ``T`` are constrained to
-concrete types descended from Person and Qualification. ``Dr`` is therefore the
-'upper bound', the most general concrete type our function will accept.
+The bound is denoted by the symbol ``<:`` which can be read as 'T is a sub-class
+of Doctor'. So our definition states that valid values of ``T`` are constrained
+to concrete types descended from Person and Qualification. ``Doctor`` is
+therefore the 'upper bound', the most general concrete type our function will
+accept.
 
 This allows us to limit type selection within a hierarchy. Our example for
 instance needs a little refinement...
 ::
    scala> trait CyclingProficiency extends Qualification
+
    scala> operate(new Person with CyclingProficiency)
    Pass me the knife // uh-oh this looks bad :(
 
 The compiler can help us out, lets refine the restriction.
 ::
-   scala> trait MedicalDoctor extends Qualification
-   scala> type Dr = Person with MedicalDoctor // restrict the hierarchy
+   scala> trait MedicalDegree extends Qualification
+   scala> type Doctor = Person with MedicalDegree // restrict the hierarchy
 
    scala> operate(new Person with CyclingProficiency)
 
    <console>:13: error: inferred type arguments [Person with CyclingProficiency]
    do not conform to method operate's type parameter bounds [P <: Person with
-   MedicalDoctor]
+   MedicalDegree]
                  operate(new Person with CyclingProficiency)
                  ^
    <console>:13: error: type mismatch;
@@ -140,18 +143,22 @@ The compiler can help us out, lets refine the restriction.
     required: P
                  operate(new Person with CyclingProficiency)
 
-So, to recap - the upper bound is useful for narrowing type selection. We use
-it to choose the most general concrete types our code can operate upon.
+Our restriction has excluded cyclists (without medical degrees) from operating,
+good job! So, to recap - the upper bound is useful for narrowing type
+selection. We use it to define the most general concrete type our code can
+operate upon.
 
-As upper bounds are useful for selecting narrower types, lower bounds are
-useful for selecting wider types. The lower bound is denoted by the ``>:``
-symbol.  Lets look at an example ripped from Joshua Suereth's book `Scala in
-Depth <http://www.manning.com/suereth/>`_
+As upper bounds constrain to narrower types, so lower bounds constrain to wider
+ones. The lower bound is denoted by the ``>:`` symbol, which we can read as
+'super-class of'.  Lets look at an example ripped from Joshua Suereth's book
+`Scala in Depth <http://www.manning.com/suereth/>`_
 ::
-    class Container {
+   class Container {
+
       type Things >: List[Int]
+
       def echo(a : Things) = a
-    }
+   }
 
 Container has been defined with an inner type ``Things``, ``Things`` has been
 constrained using a lower bound to values which are equal or
@@ -160,6 +167,7 @@ Container where ``Things`` has a more general type than ``List[Int]``.
 ::
    scala> val first = new Container { type Things = Traversable[Int] }
    first: Container{type Things = Traversable[Int]} = $anon$1@53edd9ee
+
    scala> first.echo(Set(1))
    res0: first.Things = Set(1)
 
@@ -179,8 +187,8 @@ This fails because ``Set`` is not in an inheritance relationship with ``List``.
 
 The practical application of lower bounds is often less intuitively apparent; to
 grasp its usefulness we have to move onto what happens when we start
-sub-classing generic types. Let detour briefly and come back to this again in a
-second.
+sub-classing generic types. Let detour briefly to see the problem, and return to
+this again in just a second.
 
 =================================
 Co-Variance and Contra-Variance
@@ -203,9 +211,14 @@ types have non-variant sub-typing by default. The type parameter of ``T`` cannot
 be changed.
 ::
    scala> class Box[T] {}
+
    scala> val box = new Box[String]
    box: Box[String] = Box@621cc66c
-   scala>  val box2: Box[Any] = box
+
+   scala>  val box2: Box[Any] = box // Try and widen the type
+
+   // Nope - it wont work
+
    <console>:9: error: type mismatch;
    found   : Box[String]
        required: Box[Any]
@@ -213,61 +226,68 @@ be changed.
       You may wish to define T as +T instead. (SOLS 4.5)
               val box2: Box[Any] = box
 
-The variance we are after is called co-variance. Co-variance allows us to use a
-parent type in place of  ``T``, the resulting types will then be considered
+The variance we are looking for is called co-variance. Co-variance allows us to
+use a parent type in place of ``T``, the resulting types will then be considered
 conformant. To make a class co-variant we add a plus sign (+) to the type
 parameter. Co-variance tells the compiler that it's safe for this class to
 appear in contexts where we are casting the variable to a super-type.
+
+Lets update our Box and prove to ourselves it works
 ::
    scala> class Box[+T] {}
+
    scala> val box = new Box[String]
    box: Box[String] = Box@4ce2fbd3
-   scala> val box2: Box[Any] = box
-   box2: Box[Any] = Box@4ce2fbd3
 
-All well and good, but here's a (non-compiling) thought experiment:
+   // Now try and widen the assignment
+   scala> val box2: Box[Any] = box
+   box2: Box[Any] = Box@4ce2fbd3  // Success :)
+
+Now, pay attention, this is the point of the detour - let's perform a thought
+experiment
 ::
    scala> class Box[+T] { def update( f:T) {} }
-   scala> val first = new Box[String]
-   scala> val second : Box[Any] = first
-   scala> val wtf = second.update(false) // Woah, this should not be allowed!
+
+   scala> val strings = new Box[String]
+
+   // Widen the type to Any, who knows what's in here now
+   scala> val anythings : Box[Any] = strings
+
+   scala> val jeepers = anythings.update(false) // This can NOT be allowed!
 
 Co-Variance has allowed us to widen the type to ``Any``, at which point we can
-potentially make unsafe assignments. The same situation arises with Java Arrays,
-where a runtime ArrayStoreException is raised. Scala takes a different
-approach which has the advantage of being enforceable at compile time. Scala
-restricts the positions a co-variant parameter can appear.
-
-Taken from `Scala By Example <http://www.scala-lang.org/docu/files/ScalaByExample.pdf>`_:
-::
-   "A co-variant type parameter of a class may only appear in co-variant positions
-   inside the class. Among the co-variant positions are the types of values in the
-   class, the result types of methods in the class, and type arguments to other
-   co-variant types. Not co-variant are types of formal method parameters.
-
-The example in our thought experiment doesn't compile, ``f : T`` is a method
-parameter. It prevents us from storing the Boolean.
+potentially make unsafe assignments. The exact same situation arises with Java
+Arrays, where a runtime ArrayStoreException is raised. Scala takes a different
+approach which has the advantage of being enforceable at compile
 ::
    scala>  class Box[+T] { def update( f:T) {}  }
+
    <console>:7: error: covariant type T occurs in contravariant position in type T of value f
            class Box[+T] { def update( f:T) {}  }
                                     ^
-This is where contra-variance and lower bounds might start to make sense. Notice
-the error message given above. Contra-variance means that to be a conformant
-type the type has to be in a super-type relationship with ``T``.
+So our thought experiment doesn't actually compile. Scala classifies method
+parameters as *contra-variant* positions, and Scala wont let us put a
+*co-variant* parameter in a *contra-variant* position. This rule stops
+us shooting ourselves in the face and storing a Boolean in a list of Strings.
 
-As a rule our functions should be co-variant in parameter type and
-contra-variant in return type. Think about it - providing a narrower input type
-is always safe, e.g. a ``List`` in place of a ``Traversable``. Likewise returning a
-super-type of the return value is always safe, e.g. ``Any`` in place of
-``String``.
+Ok. Detour complete, lets return to why lower bounds are useful. The error
+message tells us that method parameters are contra-variant. We have
+to make sure that ``f`` is in a super-type relationship with ``T``.
 
-To fix our ``Box`` therefore we have to restrict the return type to be
-contra-variant on ``T``. We've just seen how to do this - type
-bounds, huzzah!
+Huzzah, we've just learned how to do this! Add a lower type bound to the method.
 ::
    scala>  class Box[+T] { def update[S >: T]( f:S) {}  }
    defined class Box
+
+Here we've introduced another type variable ``S`` for the parameter type. That's
+so we can make the assertion that ``S`` is a 'super-type' of ``T``, restricting
+values of ``f`` to be contra-variant to ``T``.
+
+If you think about it, it makes sense. Functions should be co-variant in
+parameter type and contra-variant in return type. Providing a narrower input
+type is always safe, e.g. passing ``List`` in place of a
+``Traversable``. Likewise returning a super-type of the return value is always
+safe, e.g. ``Iterable`` in place of a ``String``.
 
 That's it; we've seen how to parameratise classes and functions and how to
 restrict type variables with bounds. We've learned how to make Generic classes
