@@ -165,8 +165,8 @@ operate upon.
 
 As upper bounds constrain us to narrower types, so lower bounds constrain us to wider
 ones. The lower bound is denoted by the ``>:`` symbol, which we can read as
-'super-class of'.  Let's look at an example ripped from [Joshua Suereth's book
-- Scala in Depth](http://www.manning.com/suereth)
+'super-class of'.  Let's look at an example ripped from Joshua Suereth's book
+[Scala in Depth](http://www.manning.com/suereth)
 
 ```scala
 class Container {
